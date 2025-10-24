@@ -58,9 +58,9 @@ const useFormField = () => {
   return {
     id,
     name: fieldContext.name,
-    formItemId: `${id}-form-item`,
-    formDescriptionId: `${id}-form-item-description`,
-    formMessageId: `${id}-form-item-message`,
+    formItemId: ${id}-form-item,
+    formDescriptionId: ${id}-form-item-description,
+    formMessageId: ${id}-form-item-message,
     ...fieldState,
   }
 }
@@ -80,7 +80,11 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
     <FormItemContext.Provider value={{ id }}>
       <div
         data-slot="form-item"
-        className={cn("grid gap-2", className)}
+        className={cn(
+          // tampilan baru: lebih lembut dan minimalis
+          "grid gap-2 p-4 rounded-xl border border-[#5C83B3]/40 bg-gradient-to-br from-[#EAF1F9] to-[#F8FBFF] shadow-sm hover:shadow-md hover:border-[#37649D]/60 transition-all duration-300",
+          className
+        )}
         {...props}
       />
     </FormItemContext.Provider>
@@ -97,7 +101,11 @@ function FormLabel({
     <Label
       data-slot="form-label"
       data-error={!!error}
-      className={cn("data-[error=true]:text-destructive", className)}
+      className={cn(
+        "font-semibold text-[#134686] text-[15px] tracking-wide",
+        "data-[error=true]:text-[#D32F2F]",
+        className
+      )}
       htmlFor={formItemId}
       {...props}
     />
@@ -113,10 +121,18 @@ function FormControl({ ...props }: React.ComponentProps<typeof Slot>) {
       id={formItemId}
       aria-describedby={
         !error
-          ? `${formDescriptionId}`
-          : `${formDescriptionId} ${formMessageId}`
+          ? ${formDescriptionId}
+          : ${formDescriptionId} ${formMessageId}
       }
       aria-invalid={!!error}
+      className={cn(
+        // gaya input baru: flat, lembut, dan fokus halus
+        "w-full rounded-lg border border-[#5C83B3]/50 bg-white/70 px-4 py-2 text-[15px] shadow-xs outline-none transition-all duration-200",
+        "focus:ring-2 focus:ring-[#5C83B3]/50 focus:border-[#37649D]",
+        "placeholder:text-[#37649D]/60",
+        "data-[error=true]:border-[#D32F2F] data-[error=true]:ring-[#D32F2F]/30",
+        props.className
+      )}
       {...props}
     />
   )
@@ -129,7 +145,10 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-description"
       id={formDescriptionId}
-      className={cn("text-muted-foreground text-sm", className)}
+      className={cn(
+        "text-[#37649D]/80 text-sm italic leading-snug",
+        className
+      )}
       {...props}
     />
   )
@@ -147,7 +166,10 @@ function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-message"
       id={formMessageId}
-      className={cn("text-destructive text-sm", className)}
+      className={cn(
+        "text-[#D32F2F] text-sm font-medium mt-1 tracking-wide",
+        className
+      )}
       {...props}
     >
       {body}

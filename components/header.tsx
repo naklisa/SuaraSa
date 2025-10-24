@@ -1,20 +1,20 @@
 // components/header.tsx
-import Link from "next/link"
-import Image from "next/image"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import { Button } from "@/components/ui/button"
+import Link from "next/link";
+import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import SignOutDialog from "@/components/sign-out-dialog"
-import { Session } from "next-auth"
+} from "@/components/ui/popover";
+import SignOutDialog from "@/components/sign-out-dialog";
+import { Session } from "next-auth";
 
 export default async function Header() {
-  const session: Session | null = await getServerSession(authOptions)
-  const user = session?.user
+  const session: Session | null = await getServerSession(authOptions);
+  const user = session?.user;
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -88,5 +88,5 @@ export default async function Header() {
         </div>
       </div>
     </header>
-  )
+  );
 }
