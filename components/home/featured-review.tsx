@@ -12,8 +12,8 @@ const Stars = ({ value }: { value: number }) => {
         <svg
           key={star}
           className="w-4 h-4"
-          fill={star <= value ? "#5c83b3" : "none"}
-          stroke={star <= value ? "#5c83b3" : "#37649d"}
+          fill={star <= value ? "#ff7403ff" : "none"}
+          stroke={star <= value ? "#ff7403ff" : "#AACACE"}
           strokeWidth="1.5"
           viewBox="0 0 24 24"
         >
@@ -81,7 +81,7 @@ export function FeaturedReviews() {
   return (
     <section
       className="px-4 py-6"
-      style={{ background: "#134686", minHeight: "100vh" }}
+      style={{ background: "#004F6C", minHeight: "100vh" }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="mb-6 flex items-center gap-2">

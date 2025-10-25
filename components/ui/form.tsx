@@ -81,7 +81,6 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
       <div
         data-slot="form-item"
         className={cn(
-          // tampilan baru: lebih lembut dan minimalis
           "grid gap-2 p-4 rounded-xl border border-[#5C83B3]/40 bg-gradient-to-br from-[#EAF1F9] to-[#F8FBFF] shadow-sm hover:shadow-md hover:border-[#37649D]/60 transition-all duration-300",
           className
         )}

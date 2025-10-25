@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} font-sans bg-[#5C83B3]`}
+        className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} font-sans bg-[#1F6E8C]`}
       >
         {children}
         <Toaster richColors position="top-center" closeButton />

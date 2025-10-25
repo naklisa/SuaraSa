@@ -10,7 +10,7 @@ export default function MainLayout({
     <>
       <Header />
       {/* flex-1 makes main take remaining height, pushing Footer down */}
-      <main className="max-w-4xl mx-auto p-6 flex-1 w-full bg-[#5C83B3]">
+      <main className="max-w-4xl mx-auto p-6 flex-1 w-full bg-[#1F6E8C]">
         {children}
       </main>
       <Footer />

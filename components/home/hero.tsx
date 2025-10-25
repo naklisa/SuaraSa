@@ -21,7 +21,7 @@ export function Hero({
   return (
     <section
       className="relative py-20 px-4 text-center"
-      style={{ background: "#134686" }}
+      style={{ background: "#004F6C" }}
     >
       {/* Blue gradient backdrop with new palette */}
       <div
@@ -41,7 +41,6 @@ export function Hero({
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
-          textShadow: "0 0 40px rgba(255, 255, 255, 1)",
         }}
       >
         SuarAsa
@@ -68,9 +67,9 @@ export function Hero({
           placeholder="Search for a song, artist, or vibe…"
           className="h-12 text-base"
           style={{
-            background: "rgba(55, 100, 157, 0.6)",
+            background: "#AACACE",
             border: "1px solid rgba(255, 255, 255, 1)",
-            color: "#ffffffff",
+            color: "#000000ff",
             boxShadow: "0 0 20px rgba(92, 131, 179, 0.1)",
           }}
           onFocus={(e) => {
@@ -131,7 +130,7 @@ export function Hero({
         <kbd
           className="px-2 py-1 rounded text-xs font-mono"
           style={{
-            background: "rgba(92, 131, 179, 0.2)",
+            background: "#AACACE",
             border: "1px solid rgba(92, 131, 179, 0.4)",
             color: "#5c83b3",
           }}

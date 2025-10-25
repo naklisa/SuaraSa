@@ -31,12 +31,15 @@ export function Trending() {
   }, []);
 
   return (
-    <section className="px-4 py-8" style={{ background: "#134686" }}>
+    <section className="px-4 py-8" style={{ background: "#004F6C" }}>
       <div className="max-w-6xl mx-auto">
         <div className="mb-6 flex items-center justify-between">
           <h2
             className="text-xl md:text-2xl font-bold"
-            style={{ color: "#FFFFFF" }}
+            style={{
+              color: "#ffffffff",
+              textShadow: "0 0 20px rgba(0, 191, 255, 0.4)",
+            }}
           >
             Trending now
           </h2>
@@ -49,28 +52,36 @@ export function Trending() {
                 key={i}
                 className="rounded-xl p-3 animate-pulse space-y-3"
                 style={{
-                  background: "#37649D",
-                  border: "none",
+                  background: "rgba(17, 34, 64, 0.5)",
+                  border: "1px solid rgba(30, 144, 255, 0.3)",
                 }}
               >
                 <div
                   className="w-full aspect-square rounded-lg"
-                  style={{ background: "#5C83B3" }}
+                  style={{ background: "rgba(30, 144, 255, 0.2)" }}
                 />
                 <div
                   className="h-4 w-2/3 rounded"
-                  style={{ background: "#5C83B3" }}
+                  style={{ background: "rgba(30, 144, 255, 0.3)" }}
                 />
                 <div
                   className="h-3 w-1/2 rounded"
-                  style={{ background: "#5C83B3" }}
+                  style={{ background: "rgba(30, 144, 255, 0.2)" }}
                 />
               </div>
             ))}
           </div>
         ) : error ? (
-          <Card style={{ background: "#37649D", border: "none" }}>
-            <CardContent className="p-6 text-sm" style={{ color: "#FFFFFF" }}>
+          <Card
+            style={{
+              background: "#AACACE",
+              border: "1px solid rgba(30, 144, 255, 0.3)",
+            }}
+          >
+            <CardContent
+              className="p-6 text-sm"
+              style={{ color: "#000000" }} // Diubah menjadi hitam
+            >
               {error}
             </CardContent>
           </Card>
@@ -81,14 +92,19 @@ export function Trending() {
                 key={t.id}
                 className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105"
                 style={{
-                  background: "#37649D",
-                  border: "none",
+                  background: "#AACACE",
+                  border: "1px solid rgba(30, 144, 255, 0.4)",
+                  boxShadow: "0 4px 15px rgba(0, 191, 255, 0.15)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#5C83B3";
+                  e.currentTarget.style.boxShadow =
+                    "0 8px 30px rgba(0, 191, 255, 0.3)";
+                  e.currentTarget.style.borderColor = "rgba(0, 191, 255, 0.6)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "#37649D";
+                  e.currentTarget.style.boxShadow =
+                    "0 4px 15px rgba(0, 191, 255, 0.15)";
+                  e.currentTarget.style.borderColor = "rgba(30, 144, 255, 0.4)";
                 }}
               >
                 <Link
@@ -100,18 +116,29 @@ export function Trending() {
                 <CardContent className="p-3">
                   <div className="relative overflow-hidden rounded-lg">
                     {t.image ? (
-                      <Image
-                        src={t.image}
-                        alt={t.name}
-                        width={500}
-                        height={500}
-                        loading="lazy"
-                        className="w-full aspect-square object-cover rounded-lg transition-transform duration-300 ease-out group-hover:scale-110"
-                      />
+                      <div
+                        className="w-full aspect-square rounded-lg overflow-hidden"
+                        style={{
+                          border: "2px solid rgba(30, 144, 255, 0.3)",
+                          boxShadow: "0 4px 20px rgba(0, 191, 255, 0.2)",
+                        }}
+                      >
+                        <Image
+                          src={t.image}
+                          alt={t.name}
+                          width={500}
+                          height={500}
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-110"
+                        />
+                      </div>
                     ) : (
                       <div
                         className="w-full aspect-square rounded-lg"
-                        style={{ background: "#134686" }}
+                        style={{
+                          background: "#AACACE",
+                          border: "2px solid rgba(30, 144, 255, 0.3)",
+                        }}
                       />
                     )}
 
@@ -119,35 +146,65 @@ export function Trending() {
                     <span
                       className="absolute top-2 left-2 rounded-full px-2.5 py-1 text-xs font-bold"
                       style={{
-                        background: "#5C83B3",
-                        color: "#FFFFFF",
+                        background: "linear-gradient(135deg, #00BFFF, #1E90FF)",
+                        color: "#000000", // Diubah menjadi hitam
+                        boxShadow: "0 0 15px rgba(0, 191, 255, 0.5)",
+                        border: "1px solid rgba(255, 255, 255, 0.2)",
                       }}
                     >
                       #{idx + 1}
                     </span>
+
+                    {/* Glow overlay */}
+                    <div
+                      className="pointer-events-none absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                      style={{
+                        background:
+                          "radial-gradient(circle at center, rgba(0, 191, 255, 0.15), transparent 70%)",
+                      }}
+                    />
                   </div>
 
                   <div className="mt-3">
                     <div
                       className="font-semibold truncate text-sm"
-                      style={{ color: "#FFFFFF" }}
+                      style={{ color: "#000000" }} // Diubah menjadi hitam
                     >
                       {t.name}
                     </div>
                     <div
                       className="text-xs truncate mt-0.5"
-                      style={{ color: "rgba(255, 255, 255, 0.7)" }}
+                      style={{ color: "#000000" }} // Diubah menjadi hitam
                     >
                       {t.artists.join(", ")}
                     </div>
                   </div>
                 </CardContent>
+
+                {/* Focus ring */}
+                <span
+                  className="pointer-events-none absolute inset-0 rounded-xl ring-0 ring-offset-1 group-focus-within:ring-2"
+                  style={
+                    {
+                      "--tw-ring-color": "#000000", // Diubah menjadi hitam
+                      backgroundColor: "transparent",
+                    } as React.CSSProperties
+                  }
+                />
               </Card>
             ))}
           </div>
         ) : (
-          <Card style={{ background: "#37649D", border: "none" }}>
-            <CardContent className="p-6 text-sm" style={{ color: "#FFFFFF" }}>
+          <Card
+            style={{
+              background: "#AACACE",
+              border: "1px solid rgba(30, 144, 255, 0.3)",
+            }}
+          >
+            <CardContent
+              className="p-6 text-sm"
+              style={{ color: "#000000" }} // Diubah menjadi hitam
+            >
               No trending tracks yet. Try searching to seed your cache.
             </CardContent>
           </Card>

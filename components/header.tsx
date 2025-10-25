@@ -17,7 +17,10 @@ export default async function Header() {
   const user = session?.user;
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header
+      className="sticky top-0 z-40 border-b backdrop-blur supports-[backdrop-filter]:bg-background/100"
+      style={{ backgroundColor: "#1F6E8C" }}
+    >
       <div className="mx-auto h-16 max-w-7xl px-4 md:px-8 flex items-center justify-between">
         {/* Left: Brand */}
         <Link
