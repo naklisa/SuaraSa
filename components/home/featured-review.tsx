@@ -307,10 +307,10 @@ export function FeaturedReviews() {
                 >
                   <button
                     onClick={() => handleInteraction(item.id, "like")}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-xs transition-all duration-200"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-xs transition-all duration-200 cursor-pointer"
                     style={{
                       background: interactions[item.id]?.like
-                        ? "linear-gradient(135deg, #5c83b3, #37649d)"
+                        ? "rgba(0, 191, 255, 0.5)"
                         : "rgba(92, 131, 179, 0.15)",
                       color: interactions[item.id]?.like
                         ? "#E6F1FF"
@@ -326,7 +326,7 @@ export function FeaturedReviews() {
                     onMouseEnter={(e) => {
                       if (!interactions[item.id]?.like) {
                         e.currentTarget.style.background =
-                          "rgba(92, 131, 179, 0.25)";
+                          "rgba(0, 191, 255, 0.5)";
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -342,7 +342,7 @@ export function FeaturedReviews() {
 
                   <button
                     onClick={() => handleInteraction(item.id, "dislike")}
-                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-xs transition-all duration-200"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-xs transition-all duration-200 cursor-pointer"
                     style={{
                       background: interactions[item.id]?.dislike
                         ? "rgba(255, 100, 100, 0.8)"

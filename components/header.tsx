@@ -25,7 +25,8 @@ export default async function Header() {
         {/* Left: Brand */}
         <Link
           href="/"
-          className="font-bold text-lg text-primary hover:opacity-90 transition"
+          className="text-5xl text-white hover:opacity-90 transition mb-4"
+          style={{ fontFamily: "var(--font-retrock)" }}
         >
           SuaraAsa
         </Link>

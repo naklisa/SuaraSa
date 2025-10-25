@@ -1,44 +1,44 @@
 // app/profile/page.tsx
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import { prisma } from "@/lib/prisma"
-import Image from "next/image"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Music2, Star, Calendar } from "lucide-react"
-import ProfileReviews from "@/components/profile/profile-reviews"
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { prisma } from "@/lib/prisma";
+import Image from "next/image";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import { Heart, Music2, Star, Calendar } from "lucide-react";
+import ProfileReviews from "@/components/profile/profile-reviews";
 
 // ---- Types ----
 type SessionUser = {
-  id: string
-  name?: string | null
-  email?: string | null
-  image?: string | null
-}
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};
 
 type TrackLite = {
-  id: string
-  name: string
-  artists: string[]
-  album: string
-  albumImage: string | null
-}
+  id: string;
+  name: string;
+  artists: string[];
+  album: string;
+  albumImage: string | null;
+};
 
 type ReviewWithTrack = {
-  id: string
-  rating: number
-  title: string | null
-  body: string
-  createdAt: Date
-  updatedAt: Date
-  authorId: string
-  trackId: string
-  track: TrackLite
-}
+  id: string;
+  rating: number;
+  title: string | null;
+  body: string;
+  createdAt: Date;
+  updatedAt: Date;
+  authorId: string;
+  trackId: string;
+  track: TrackLite;
+};
 
 // Minimal, server-safe star display
 function Stars({ value }: { value: number }) {
-  const full = Math.round(value)
+  const full = Math.round(value);
   return (
     <span
       aria-label={`${value.toFixed(1)} out of 5 stars`}
@@ -49,12 +49,12 @@ function Stars({ value }: { value: number }) {
         {"★".repeat(Math.max(0, 5 - full))}
       </span>
     </span>
-  )
+  );
 }
 
 export default async function ProfilePage() {
-  const session = await getServerSession(authOptions)
-  const user = session?.user as SessionUser | undefined
+  const session = await getServerSession(authOptions);
+  const user = session?.user as SessionUser | undefined;
 
   if (!user?.id) {
     return (
@@ -70,7 +70,7 @@ export default async function ProfilePage() {
           Sign in
         </Link>
       </div>
-    )
+    );
   }
 
   const [agg, myReviews, favs] = await Promise.all([
@@ -111,16 +111,16 @@ export default async function ProfilePage() {
       orderBy: { createdAt: "desc" },
       take: 12,
     }) as unknown as Promise<ReviewWithTrack[]>,
-  ])
+  ]);
 
-  const avgGiven = agg._avg.rating ?? 0
-  const totalReviews = agg._count
+  const avgGiven = agg._avg.rating ?? 0;
+  const totalReviews = agg._count;
 
   // Serialize dates for the client component
   const reviewsForClient = myReviews.map((r) => ({
     ...r,
     createdAt: r.createdAt.toISOString(),
-  }))
+  }));
 
   return (
     <div className="mx-auto max-w-5xl space-y-10">
@@ -172,7 +172,9 @@ export default async function ProfilePage() {
               </div>
               <div className="mt-1 flex items-center gap-1 text-xl font-semibold">
                 {avgGiven.toFixed(1)}
-                <span className="hidden sm:inline"> {/* Only show stars on sm+ */}
+                <span className="hidden sm:inline">
+                  {" "}
+                  {/* Only show stars on sm+ */}
                   <Stars value={avgGiven} />
                 </span>
               </div>
@@ -193,10 +195,8 @@ export default async function ProfilePage() {
       {/* Favorites */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Favorites</h2>
-          <p className="text-xs md:text-sm text-muted-foreground">
-            Tracks you rated 5★
-          </p>
+          <h2 className="text-lg text-white font-semibold">Favorites</h2>
+          <p className="text-xs md:text-sm text-white">Tracks you rated 5★</p>
         </div>
 
         {favs.length === 0 ? (
@@ -211,12 +211,12 @@ export default async function ProfilePage() {
             <div className="md:hidden -mx-4 px-4">
               <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar">
                 {favs.map((r) => {
-                  const t = r.track
+                  const t = r.track;
                   return (
                     <Link
                       key={r.id}
                       href={`/track/${t?.id ?? r.trackId}`}
-                      className="group min-w-[78%] snap-start block rounded-2xl border hover:border-primary/40 transition-all duration-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-ring"
+                      className="bg-card/50 group min-w-[78%] snap-start block rounded-2xl border hover:border-primary/40 transition-all duration-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <CardContent className="p-4 flex items-center gap-3">
                         <div className="relative w-14 h-14 rounded-lg overflow-hidden border shrink-0">
@@ -244,7 +244,7 @@ export default async function ProfilePage() {
                         </div>
                       </CardContent>
                     </Link>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -252,7 +252,7 @@ export default async function ProfilePage() {
             {/* Desktop grid */}
             <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4">
               {favs.map((r) => {
-                const t = r.track
+                const t = r.track;
                 return (
                   <Link
                     key={r.id}
@@ -285,7 +285,7 @@ export default async function ProfilePage() {
                       </div>
                     </CardContent>
                   </Link>
-                )
+                );
               })}
             </div>
           </>
@@ -298,8 +298,8 @@ export default async function ProfilePage() {
       {/* Reviews */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Your reviews</h2>
-          <div className="text-xs text-muted-foreground inline-flex items-center gap-1">
+          <h2 className="text-lg text-white font-semibold">Your reviews</h2>
+          <div className="text-xs text-white inline-flex items-center gap-1">
             <Calendar className="w-3.5 h-3.5" />
             Sorted by most recent
           </div>
@@ -308,5 +308,5 @@ export default async function ProfilePage() {
         <ProfileReviews initialItems={reviewsForClient} />
       </section>
     </div>
-  )
+  );
 }

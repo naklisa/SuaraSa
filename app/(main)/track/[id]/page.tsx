@@ -1,23 +1,23 @@
 // app/track/[id]/page.tsx
-import Image from "next/image"
-import { prisma } from "@/lib/prisma"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/app/api/auth/[...nextauth]/route"
-import ReviewForm from "@/components/review/review-form"
-import ReviewsList from "@/components/review/review-list"
-import { unstable_noStore as noStore } from "next/cache"
+import Image from "next/image";
+import { prisma } from "@/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import ReviewForm from "@/components/review/review-form";
+import ReviewsList from "@/components/review/review-list";
+import { unstable_noStore as noStore } from "next/cache";
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 10;
 
 type SessionUser = {
-  id: string
-  name?: string | null
-  email?: string | null
-  image?: string | null
-}
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};
 
 function Stars({ value }: { value: number }) {
-  const v = Math.round(value)
+  const v = Math.round(value);
   return (
     <span
       aria-label={`${value.toFixed(1)} out of 5`}
@@ -26,21 +26,21 @@ function Stars({ value }: { value: number }) {
       {"★".repeat(v)}
       <span className="text-muted-foreground">{"★".repeat(5 - v)}</span>
     </span>
-  )
+  );
 }
 
 // NOTE: params is a Promise in your setup → await it.
 export default async function TrackPage({
   params,
 }: {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }) {
-  noStore()
+  noStore();
 
-  const { id } = await params
+  const { id } = await params;
 
-  const track = await prisma.track.findUnique({ where: { id } })
-  if (!track) return <div className="p-6">Track not found.</div>
+  const track = await prisma.track.findUnique({ where: { id } });
+  if (!track) return <div className="p-6">Track not found.</div>;
 
   const [avgAgg, firstItemsPlusOne, session] = await Promise.all([
     prisma.review.aggregate({ where: { trackId: id }, _avg: { rating: true } }),
@@ -51,18 +51,18 @@ export default async function TrackPage({
       take: PAGE_SIZE + 1,
     }),
     getServerSession(authOptions),
-  ])
+  ]);
 
-  let nextCursor: string | null = null
-  let initialItems = firstItemsPlusOne
+  let nextCursor: string | null = null;
+  let initialItems = firstItemsPlusOne;
   if (firstItemsPlusOne.length > PAGE_SIZE) {
-    nextCursor = firstItemsPlusOne[firstItemsPlusOne.length - 1].id
-    initialItems = firstItemsPlusOne.slice(0, PAGE_SIZE)
+    nextCursor = firstItemsPlusOne[firstItemsPlusOne.length - 1].id;
+    initialItems = firstItemsPlusOne.slice(0, PAGE_SIZE);
   }
 
-  const avg = avgAgg._avg.rating ?? 0
-  const user = session?.user as SessionUser | undefined
-  const currentUserId = user?.id ?? null
+  const avg = avgAgg._avg.rating ?? 0;
+  const user = session?.user as SessionUser | undefined;
+  const currentUserId = user?.id ?? null;
 
   return (
     <div className="space-y-8">
@@ -93,7 +93,11 @@ export default async function TrackPage({
       </header>
 
       {/* Form (locked if signed out) */}
-      <ReviewForm trackId={track.id} disabled={!currentUserId} signInHref="/sign-in" />
+      <ReviewForm
+        trackId={track.id}
+        disabled={!currentUserId}
+        signInHref="/sign-in"
+      />
 
       {/* Reviews */}
       <ReviewsList
@@ -104,5 +108,5 @@ export default async function TrackPage({
         currentUserId={currentUserId}
       />
     </div>
-  )
+  );
 }

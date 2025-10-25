@@ -1,11 +1,17 @@
 // app/profile/profile-reviews.tsx
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import * as React from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,97 +21,109 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Pencil, Trash2, Star } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { toast } from "sonner"
-import Image from "next/image"
+} from "@/components/ui/alert-dialog";
+import { Pencil, Trash2, Star } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
+import Image from "next/image";
 
 type Track = {
-  id: string
-  name: string
-  artists: string[]
-  album: string | null
-  albumImage: string | null
-}
+  id: string;
+  name: string;
+  artists: string[];
+  album: string | null;
+  albumImage: string | null;
+};
 
 type Review = {
-  id: string
-  rating: number
-  title: string | null
-  body: string
-  createdAt: string // ISO
-  authorId: string
-  trackId: string
-  track?: Track | null
-}
+  id: string;
+  rating: number;
+  title: string | null;
+  body: string;
+  createdAt: string; // ISO
+  authorId: string;
+  trackId: string;
+  track?: Track | null;
+};
 
-export default function ProfileReviews({ initialItems }: { initialItems: Review[] }) {
-  const [items, setItems] = React.useState<Review[]>(initialItems)
+export default function ProfileReviews({
+  initialItems,
+}: {
+  initialItems: Review[];
+}) {
+  const [items, setItems] = React.useState<Review[]>(initialItems);
 
   // Edit state
-  const [editing, setEditing] = React.useState<Review | null>(null)
-  const [editTitle, setEditTitle] = React.useState("")
-  const [editBody, setEditBody] = React.useState("")
-  const [editRating, setEditRating] = React.useState(5)
-  const [editHover, setEditHover] = React.useState<number | null>(null)
-  const [saving, setSaving] = React.useState(false)
+  const [editing, setEditing] = React.useState<Review | null>(null);
+  const [editTitle, setEditTitle] = React.useState("");
+  const [editBody, setEditBody] = React.useState("");
+  const [editRating, setEditRating] = React.useState(5);
+  const [editHover, setEditHover] = React.useState<number | null>(null);
+  const [saving, setSaving] = React.useState(false);
 
   // Delete state
-  const [deleting, setDeleting] = React.useState<Review | null>(null)
-  const [deletingBusy, setDeletingBusy] = React.useState(false)
+  const [deleting, setDeleting] = React.useState<Review | null>(null);
+  const [deletingBusy, setDeletingBusy] = React.useState(false);
 
   const openEdit = (r: Review) => {
-    setEditing(r)
-    setEditTitle(r.title ?? "")
-    setEditBody(r.body)
-    setEditRating(r.rating)
-    setEditHover(null)
-  }
+    setEditing(r);
+    setEditTitle(r.title ?? "");
+    setEditBody(r.body);
+    setEditRating(r.rating);
+    setEditHover(null);
+  };
   const closeEdit = () => {
-    if (saving) return
-    setEditing(null)
-    setEditTitle("")
-    setEditBody("")
-    setEditRating(5)
-    setEditHover(null)
-  }
+    if (saving) return;
+    setEditing(null);
+    setEditTitle("");
+    setEditBody("");
+    setEditRating(5);
+    setEditHover(null);
+  };
 
   async function saveEdit() {
-    if (!editing) return
+    if (!editing) return;
     try {
-      setSaving(true)
-      const payload = { title: editTitle, body: editBody, rating: editRating }
+      setSaving(true);
+      const payload = { title: editTitle, body: editBody, rating: editRating };
       const res = await fetch(`/api/reviews/${editing.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-      })
-      if (!res.ok) throw new Error("Failed")
-      const json = (await res.json()) as { review: Review }
-      setItems((prev) => prev.map((it) => (it.id === editing.id ? { ...json.review, createdAt: String(json.review.createdAt) } : it)))
-      toast.success("Review updated")
-      closeEdit()
+      });
+      if (!res.ok) throw new Error("Failed");
+      const json = (await res.json()) as { review: Review };
+      setItems((prev) =>
+        prev.map((it) =>
+          it.id === editing.id
+            ? { ...json.review, createdAt: String(json.review.createdAt) }
+            : it
+        )
+      );
+      toast.success("Review updated");
+      closeEdit();
     } catch {
-      toast.error("Failed to update review")
+      toast.error("Failed to update review");
     } finally {
-      setSaving(false)
+      setSaving(false);
     }
   }
 
   async function confirmDelete() {
-    if (!deleting) return
+    if (!deleting) return;
     try {
-      setDeletingBusy(true)
-      const res = await fetch(`/api/reviews/${deleting.id}`, { method: "DELETE" })
-      if (!res.ok) throw new Error("Failed")
-      setItems((prev) => prev.filter((r) => r.id !== deleting.id))
-      toast.success("Review deleted")
-      setDeleting(null)
+      setDeletingBusy(true);
+      const res = await fetch(`/api/reviews/${deleting.id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed");
+      setItems((prev) => prev.filter((r) => r.id !== deleting.id));
+      toast.success("Review deleted");
+      setDeleting(null);
     } catch {
-      toast.error("Failed to delete review")
+      toast.error("Failed to delete review");
     } finally {
-      setDeletingBusy(false)
+      setDeletingBusy(false);
     }
   }
 
@@ -116,51 +134,73 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
           No reviews yet. Search a song on the homepage to get started.
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
     <>
       <div className="space-y-3">
         {items.map((r) => {
-          const t = r.track
-          const created = new Date(r.createdAt)
+          const t = r.track;
+          const created = new Date(r.createdAt);
           return (
-            <Card key={r.id} className="border-muted hover:border-primary/40 transition-colors">
+            <Card
+              key={r.id}
+              className="bg-card/50 border-muted hover:border-primary/40 transition-colors"
+            >
               <CardContent className="p-4 flex items-start gap-4">
                 {t?.albumImage && (
-                  <Image 
-                  src={t.albumImage} 
-                  alt={t.name} 
-                  width={64}
-                  height={64}
-                  loading="lazy"
-                  className="w-16 h-16 rounded-lg object-cover border"  />
+                  <Image
+                    src={t.albumImage}
+                    alt={t.name}
+                    width={64}
+                    height={64}
+                    loading="lazy"
+                    className="w-16 h-16 rounded-lg object-cover border"
+                  />
                 )}
 
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <Link href={`/track/${t?.id ?? r.trackId}`} className="font-medium hover:underline truncate">
+                    <Link
+                      href={`/track/${t?.id ?? r.trackId}`}
+                      className="font-medium hover:underline truncate"
+                    >
                       {t?.name ?? "Unknown track"}
                     </Link>
                     <span className="text-xs text-muted-foreground">•</span>
-                    <span className="text-sm text-muted-foreground truncate">
-                      {(t?.artists ?? []).join(", ")}{t?.album ? ` — ${t.album}` : ""}
+                    <span className="text-sm text-black truncate">
+                      {(t?.artists ?? []).join(", ")}
+                      {t?.album ? ` — ${t.album}` : ""}
                     </span>
                   </div>
 
                   <div className="mt-1 text-sm flex items-center gap-2">
                     <span className="font-medium">⭐ {r.rating}</span>
-                    {r.title ? <span className="text-muted-foreground">— {r.title}</span> : null}
+                    {r.title ? (
+                      <span className="text-black">— {r.title}</span>
+                    ) : null}
                   </div>
 
-                  {r.body && <p className="mt-1 text-sm text-muted-foreground whitespace-pre-wrap">{r.body}</p>}
+                  {r.body && (
+                    <p className="mt-1 text-sm text-black whitespace-pre-wrap">
+                      {r.body}
+                    </p>
+                  )}
 
-                  <div className="mt-2 text-xs text-muted-foreground">{created.toLocaleString()}</div>
+                  <div className="mt-2 text-xs text-black">
+                    {created.toLocaleString()}
+                  </div>
                 </div>
 
                 <div className="flex gap-1">
-                  <Button size="icon" variant="ghost" className="h-8 w-8" onClick={() => openEdit(r)} aria-label="Edit review">
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8"
+                    onClick={() => openEdit(r)}
+                    aria-label="Edit review"
+                  >
                     <Pencil className="w-4 h-4" />
                   </Button>
                   <Button
@@ -175,7 +215,7 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
                 </div>
               </CardContent>
             </Card>
-          )
+          );
         })}
       </div>
 
@@ -187,9 +227,13 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
           </DialogHeader>
 
           {/* Rating stars */}
-          <div className="flex items-center gap-1" role="radiogroup" aria-label="Edit rating out of 5">
+          <div
+            className="flex items-center gap-1"
+            role="radiogroup"
+            aria-label="Edit rating out of 5"
+          >
             {[1, 2, 3, 4, 5].map((i) => {
-              const active = (editHover ?? editRating) >= i
+              const active = (editHover ?? editRating) >= i;
               return (
                 <button
                   key={i}
@@ -203,15 +247,21 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
                   onClick={() => setEditRating(i)}
                   className={cn(
                     "p-1 rounded-md transition",
-                    active ? "text-yellow-500" : "text-muted-foreground hover:text-foreground",
+                    active
+                      ? "text-yellow-500"
+                      : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   <Star className={cn("w-5 h-5", active && "fill-current")} />
-                  <span className="sr-only">{i} star{i > 1 ? "s" : ""}</span>
+                  <span className="sr-only">
+                    {i} star{i > 1 ? "s" : ""}
+                  </span>
                 </button>
-              )
+              );
             })}
-            <span className="ml-2 text-xs text-muted-foreground">{editRating}/5</span>
+            <span className="ml-2 text-xs text-muted-foreground">
+              {editRating}/5
+            </span>
           </div>
 
           <input
@@ -231,7 +281,11 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
             <Button variant="outline" onClick={closeEdit} disabled={saving}>
               Cancel
             </Button>
-            <Button onClick={saveEdit} disabled={saving} className="bg-primary hover:bg-primary/90">
+            <Button
+              onClick={saveEdit}
+              disabled={saving}
+              className="bg-primary hover:bg-primary/90"
+            >
               {saving ? "Saving…" : "Save"}
             </Button>
           </DialogFooter>
@@ -239,21 +293,31 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
       </Dialog>
 
       {/* Delete AlertDialog */}
-      <AlertDialog open={!!deleting} onOpenChange={(o) => (!o ? setDeleting(null) : null)}>
+      <AlertDialog
+        open={!!deleting}
+        onOpenChange={(o) => (!o ? setDeleting(null) : null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Delete this review?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. Your review will be permanently removed.
+              This action cannot be undone. Your review will be permanently
+              removed.
               {deleting?.body ? (
                 <span className="block mt-2 text-foreground italic">
-                  “{deleting.body.length > 80 ? `${deleting.body.slice(0, 80)}…` : deleting.body}”
+                  “
+                  {deleting.body.length > 80
+                    ? `${deleting.body.slice(0, 80)}…`
+                    : deleting.body}
+                  ”
                 </span>
               ) : null}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deletingBusy}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deletingBusy}>
+              Cancel
+            </AlertDialogCancel>
             <AlertDialogAction
               onClick={confirmDelete}
               disabled={deletingBusy}
@@ -265,5 +329,5 @@ export default function ProfileReviews({ initialItems }: { initialItems: Review[
         </AlertDialogContent>
       </AlertDialog>
     </>
-  )
+  );
 }

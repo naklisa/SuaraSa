@@ -1,20 +1,20 @@
 // components/home/results.tsx
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { Card, CardContent } from "@/components/ui/card"
-import type { Item } from "./types"
-import Image from "next/image"
+import * as React from "react";
+import Link from "next/link";
+import { Card, CardContent } from "@/components/ui/card";
+import type { Item } from "./types";
+import Image from "next/image";
 
 export function Results({
   items,
   error,
   anchorRef,
 }: {
-  items: Item[]
-  error: string | null
-  anchorRef: React.RefObject<HTMLDivElement | null>
+  items: Item[];
+  error: string | null;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
     <div ref={anchorRef}>
@@ -27,8 +27,10 @@ export function Results({
       )}
 
       {items.length > 0 && (
-        <section className="px-4 pb-16">
-          <h2 className="text-2xl font-semibold mb-6 text-center">Results</h2>
+        <section className="px-4 pb-16  bg-[#004F6C]">
+          <h2 className="text-2xl mb-4 font-semibold text-center text-white">
+            Results
+          </h2>
           <ul className="space-y-4 max-w-4xl mx-auto">
             {items.map((t) => (
               <Link
@@ -36,7 +38,7 @@ export function Results({
                 href={`/track/${t.id}`}
                 className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl transition"
               >
-                <Card className="relative overflow-hidden border border-border/40 hover:shadow-md hover:border-primary/40 transition-all duration-200">
+                <Card className="relative overflow-hidden border border-border/40 hover:shadow-md hover:border-primary/40 transition-all duration-200 bg-[#AACACE]">
                   <CardContent className="p-4 flex items-center gap-4">
                     {t.image ? (
                       <div className="relative w-16 h-16 rounded-lg overflow-hidden border shrink-0">
@@ -77,5 +79,5 @@ export function Results({
         </section>
       )}
     </div>
-  )
+  );
 }

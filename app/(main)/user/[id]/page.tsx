@@ -1,15 +1,15 @@
 // app/u/[id]/page.tsx
-import Image from "next/image"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { prisma } from "@/lib/prisma"
-import { Card, CardContent } from "@/components/ui/card"
-import { Heart, Music2, Star, Calendar } from "lucide-react"
-import PublicReviews from "@/components/profile/public-reviews"
-import type { Review, Track, User } from "@prisma/client"
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { prisma } from "@/lib/prisma";
+import { Card, CardContent } from "@/components/ui/card";
+import { Heart, Music2, Star, Calendar } from "lucide-react";
+import PublicReviews from "@/components/profile/public-reviews";
+import type { Review, Track, User } from "@prisma/client";
 
 function Stars({ value }: { value: number }) {
-  const full = Math.round(value ?? 0)
+  const full = Math.round(value ?? 0);
   return (
     <span
       aria-label={`${(value ?? 0).toFixed(1)} out of 5 stars`}
@@ -20,27 +20,27 @@ function Stars({ value }: { value: number }) {
         {"★".repeat(Math.max(0, 5 - full))}
       </span>
     </span>
-  )
+  );
 }
 
 // Shape for reviews with author + track included
 type ReviewWithAuthorAndTrack = Review & {
-  author: Pick<User, "id" | "name" | "image">
-  track: Track
-}
+  author: Pick<User, "id" | "name" | "image">;
+  track: Track;
+};
 
 export default async function PublicProfilePage({
   params,
 }: {
-  params: { id: string }
+  params: { id: string };
 }) {
-  const { id } = params
+  const { id } = params;
 
   const user = await prisma.user.findUnique({
     where: { id },
     select: { id: true, name: true, image: true, createdAt: true },
-  })
-  if (!user) return notFound()
+  });
+  if (!user) return notFound();
 
   const [agg, reviews, favs] = await Promise.all([
     prisma.review.aggregate({
@@ -63,16 +63,16 @@ export default async function PublicProfilePage({
       orderBy: { createdAt: "desc" },
       take: 12,
     }),
-  ])
+  ]);
 
-  const avgGiven = agg._avg.rating ?? 0
-  const totalReviews = agg._count
+  const avgGiven = agg._avg.rating ?? 0;
+  const totalReviews = agg._count;
 
   // Serialize createdAt for the client component
   const reviewsForClient = (reviews as ReviewWithAuthorAndTrack[]).map((r) => ({
     ...r,
     createdAt: (r.createdAt as Date).toISOString(),
-  }))
+  }));
 
   return (
     <div className="mx-auto max-w-5xl space-y-10">
@@ -122,7 +122,9 @@ export default async function PublicProfilePage({
               </div>
               <div className="mt-1 flex items-center gap-1 text-xl font-semibold">
                 {avgGiven.toFixed(1)}
-                <span className="hidden sm:inline"> {/* Only show stars on sm+ */}
+                <span className="hidden sm:inline">
+                  {" "}
+                  {/* Only show stars on sm+ */}
                   <Stars value={avgGiven} />
                 </span>
               </div>
@@ -143,10 +145,8 @@ export default async function PublicProfilePage({
       {/* Favorites (read-only) */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Favorites</h2>
-          <p className="text-xs md:text-sm text-muted-foreground">
-            Tracks rated 5★
-          </p>
+          <h2 className="text-lg text-white font-semibold">Favorites</h2>
+          <p className="text-xs md:text-sm text-white">Tracks rated 5★</p>
         </div>
 
         {favs.length === 0 ? (
@@ -161,12 +161,12 @@ export default async function PublicProfilePage({
             <div className="md:hidden -mx-4 px-4">
               <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar">
                 {favs.map((r) => {
-                  const t = r.track as Track
+                  const t = r.track as Track;
                   return (
                     <Link
                       key={r.id}
                       href={`/track/${t.id ?? r.trackId}`}
-                      className="group min-w-[78%] snap-start block rounded-2xl border hover:border-primary/40 transition-all duration-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-ring"
+                      className="bg-card/50 group min-w-[78%] snap-start block rounded-2xl border hover:border-primary/40 transition-all duration-200 hover:shadow-sm focus-visible:ring-2 focus-visible:ring-ring"
                     >
                       <CardContent className="p-4 flex items-center gap-3">
                         <div className="relative w-14 h-14 rounded-lg overflow-hidden border shrink-0">
@@ -187,14 +187,14 @@ export default async function PublicProfilePage({
                           <div className="font-medium truncate group-hover:text-primary transition-colors">
                             {t.name ?? "Unknown"}
                           </div>
-                          <div className="text-xs text-muted-foreground truncate">
+                          <div className="text-xs text-black truncate">
                             {t.artists.join(", ")}
                             {t.album ? ` — ${t.album}` : ""}
                           </div>
                         </div>
                       </CardContent>
                     </Link>
-                  )
+                  );
                 })}
               </div>
             </div>
@@ -202,7 +202,7 @@ export default async function PublicProfilePage({
             {/* Desktop grid */}
             <div className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-4">
               {favs.map((r) => {
-                const t = r.track as Track
+                const t = r.track as Track;
                 return (
                   <Link
                     key={r.id}
@@ -235,7 +235,7 @@ export default async function PublicProfilePage({
                       </div>
                     </CardContent>
                   </Link>
-                )
+                );
               })}
             </div>
           </>
@@ -248,8 +248,8 @@ export default async function PublicProfilePage({
       {/* Reviews (read-only list) */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-semibold">Recent reviews</h2>
-          <div className="text-xs text-muted-foreground inline-flex items-center gap-1">
+          <h2 className="text-white text-lg font-semibold">Recent reviews</h2>
+          <div className="text-xs text-white inline-flex items-center gap-1">
             <Calendar className="w-3.5 h-3.5" aria-hidden />
             Most recent first
           </div>
@@ -258,5 +258,5 @@ export default async function PublicProfilePage({
         <PublicReviews initialItems={reviewsForClient} />
       </section>
     </div>
-  )
+  );
 }

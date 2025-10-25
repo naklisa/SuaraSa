@@ -20,7 +20,7 @@ export function Hero({
 }) {
   return (
     <section
-      className="relative py-20 px-4 text-center"
+      className="relative px-4 pb-10 text-center"
       style={{ background: "#004F6C" }}
     >
       {/* Blue gradient backdrop with new palette */}
@@ -34,13 +34,14 @@ export function Hero({
       />
 
       <h1
-        className="text-5xl md:text-7xl font-bold relative"
+        className="text-5xl md:text-[10rem] relative"
         style={{
           background:
             "linear-gradient(135deg, #ffffffff, #ffffffff, #ffffffff)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
+          fontFamily: "retrock", // Font diubah di sini
         }}
       >
         SuarAsa
