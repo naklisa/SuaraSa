@@ -41,6 +41,8 @@ interface FeaturedItem {
   };
   title: string | null;
   body: string | null;
+  likes: number;
+  dislikes: number;
 }
 
 export function FeaturedReviews() {
@@ -337,7 +339,7 @@ export function FeaturedReviews() {
                     }}
                   >
                     <ThumbsUp size={14} />
-                    Like
+                    Like ({item.likes})
                   </button>
 
                   <button
@@ -372,7 +374,7 @@ export function FeaturedReviews() {
                     }}
                   >
                     <ThumbsDown size={14} />
-                    Dislike
+                    Dislike ({item.dislikes})
                   </button>
                 </div>
               </div>

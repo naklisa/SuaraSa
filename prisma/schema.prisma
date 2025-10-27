@@ -33,6 +33,7 @@ model User {
   sessions    Session[]
   reviews     Review[]
   likes       Like[]
+  dislikes    Dislike[]
   comments    Comment[]
   lists       List[]
 
@@ -103,13 +104,15 @@ model Review {
   title     String?
   body      String
   likes     Int      @default(0) // ← this is a counter, keep it if you want
+  dislikes  Int      @default(0) // ← counter untuk dislikes
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   author    User     @relation(fields: [authorId], references: [id])
   track     Track    @relation(fields: [trackId], references: [id])
 
-  likesRel  Like[] 
+  likesRel  Like[]
+  dislikesRel Dislike[] // ← relasi untuk dislikes
 
   comments  Comment[]
 
@@ -119,6 +122,19 @@ model Review {
 
 
 model Like {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  reviewId  String   @db.ObjectId
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  review Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, reviewId])
+  @@index([reviewId])
+}
+
+model Dislike {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    String   @db.ObjectId
   reviewId  String   @db.ObjectId

@@ -23,7 +23,11 @@ export async function GET(req: Request) {
       orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       ...(cursorId ? { cursor: { id: cursorId }, skip: 1 } : {}),
       take,
-    }),
+    }).then(reviews => reviews.map(review => ({
+      ...review,
+      likes: review.likes || 0,
+      dislikes: review.dislikes || 0,
+    }))),
     prisma.review.aggregate({ where: { trackId }, _avg: { rating: true } }),
   ])
   let nextCursor: string | null = null

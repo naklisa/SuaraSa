@@ -25,6 +25,8 @@ export async function GET() {
       body: r.body,
       createdAt: r.createdAt,
       author: r.author,
+      likes: r.likes || 0,
+      dislikes: r.dislikes || 0,
       track: {
         id: r.track.id,
         name: r.track.name,

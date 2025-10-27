@@ -34,7 +34,7 @@ export default function SignOutDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Sign out?</AlertDialogTitle>
           <AlertDialogDescription>
-            You’ll be logged out of SuaraAziz and returned to the homepage.
+            You’ll be logged out of SuarAsa and returned to the homepage.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

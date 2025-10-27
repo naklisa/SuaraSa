@@ -29,6 +29,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Stars } from "@/components/home/stars"
 import Link from "next/link"
 import Image from "next/image"
+import LikeDislikeButtons from "@/components/review/like-dislike-buttons"
+import CommentList from "@/components/comment/comment-list"
+import CommentForm from "@/components/comment/comment-form"
 
 type Author = {
   id: string
@@ -47,6 +50,8 @@ type Review = {
   authorId: string
   author: Author
   trackId: string
+  likes: number
+  dislikes: number
 }
 
 const BODY_MAX = 800
@@ -297,6 +302,27 @@ export default function ReviewsList({
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
+                </div>
+              )}
+            </div>
+
+            {/* Like/Dislike Buttons */}
+            <div className="mt-4 ml-12">
+              <LikeDislikeButtons reviewId={r.id} initialLikes={r.likes} initialDislikes={r.dislikes} currentUserId={currentUserId} />
+            </div>
+
+            {/* Comments Section */}
+            <div className="mt-4 ml-12">
+              <CommentList
+                reviewId={r.id}
+                initialItems={[]} // TODO: Fetch initial comments if needed
+                initialNextCursor={null}
+                pageSize={5}
+                currentUserId={currentUserId}
+              />
+              {currentUserId && (
+                <div className="mt-3">
+                  <CommentForm reviewId={r.id} />
                 </div>
               )}
             </div>
