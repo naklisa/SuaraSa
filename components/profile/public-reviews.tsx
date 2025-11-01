@@ -38,7 +38,14 @@ export default function PublicReviews({
 }) {
   if (!initialItems?.length) {
     return (
-      <div className="rounded-2xl border p-6 text-sm text-black">
+      <div
+        className="border p-6 text-sm"
+        style={{
+          background: "#e2fbce",
+          borderColor: "#076653",
+          color: "#076653",
+        }}
+      >
         No reviews yet.
       </div>
     );
@@ -53,7 +60,26 @@ export default function PublicReviews({
         return (
           <article
             key={r.id}
-            className="bg-card/50 rounded-2xl border p-4 bg-card/50 hover:shadow-sm transition-all"
+            className="p-4 transition-all"
+            style={{
+              background: "#f0f9e8",
+              border: "1px solid #076653",
+              boxShadow: "0 2px 8px rgba(7, 102, 83, 0.15)",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = "#e2fbce";
+              e.currentTarget.style.boxShadow =
+                "0 4px 16px rgba(7, 102, 83, 0.25)";
+              e.currentTarget.style.transform = "translateY(-2px)";
+              e.currentTarget.style.borderColor = "#054a3c";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = "#f0f9e8";
+              e.currentTarget.style.boxShadow =
+                "0 2px 8px rgba(7, 102, 83, 0.15)";
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "#076653";
+            }}
           >
             <div className="flex items-start gap-3">
               {/* Optional album art leading the row */}
@@ -65,7 +91,11 @@ export default function PublicReviews({
                     width={48}
                     height={48}
                     loading="lazy"
-                    className="w-12 h-12 rounded-lg object-cover border"
+                    className="w-12 h-12 object-cover border"
+                    style={{
+                      borderColor: "#076653",
+                      boxShadow: "0 2px 4px rgba(7, 102, 83, 0.2)",
+                    }}
                   />
                 </Link>
               ) : null}
@@ -75,33 +105,44 @@ export default function PublicReviews({
                   <Link
                     href={`/track/${t?.id}`}
                     className="font-medium hover:underline truncate"
+                    style={{ color: "#076653" }}
                   >
                     {t?.name ?? "Unknown track"}
                   </Link>
                   {t?.artists?.length ? (
                     <>
-                      <span className="text-black">•</span>
-                      <span className="text-sm text-black truncate">
+                      <span style={{ color: "#076653" }}>•</span>
+                      <span
+                        className="text-sm truncate"
+                        style={{ color: "#0a6b56" }}
+                      >
                         {t.artists.join(", ")}
                       </span>
                     </>
                   ) : null}
-                  <span className="text-black">•</span>
-                  <time dateTime={createdIso} className="text-black">
+                  <span style={{ color: "#076653" }}>•</span>
+                  <time dateTime={createdIso} style={{ color: "#0a6b56" }}>
                     {new Date(r.createdAt).toLocaleString()}
                   </time>
                 </div>
 
                 <div className="mt-1 text-sm flex items-center gap-2">
                   <Stars value={r.rating} />
-                  <span className="text-xs text-black">{r.rating}/5</span>
+                  <span className="text-xs" style={{ color: "#076653" }}>
+                    {r.rating}/5
+                  </span>
                   {r.title ? (
-                    <span className="text-sm">— {r.title}</span>
+                    <span className="text-sm" style={{ color: "#0a6b56" }}>
+                      — {r.title}
+                    </span>
                   ) : null}
                 </div>
 
                 {r.body && (
-                  <p className="mt-1 text-sm text-black whitespace-pre-wrap leading-relaxed">
+                  <p
+                    className="mt-1 text-sm whitespace-pre-wrap leading-relaxed"
+                    style={{ color: "#0a6b56" }}
+                  >
                     {r.body}
                   </p>
                 )}

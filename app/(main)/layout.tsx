@@ -10,7 +10,12 @@ export default function MainLayout({
     <>
       <Header />
       {/* flex-1 makes main take remaining height, pushing Footer down */}
-      <main className="max-w-4xl mx-auto p-6 flex-1 w-full bg-[#004F6C]">
+      <main
+        className="max-w-4xl mx-auto p-6 flex-1 w-full"
+        style={{
+          background: "transparent",
+        }}
+      >
         {children}
       </main>
       <Footer />

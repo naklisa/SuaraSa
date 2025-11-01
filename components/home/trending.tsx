@@ -31,18 +31,32 @@ export function Trending() {
   }, []);
 
   return (
-    <section className="px-4 py-8" style={{ background: "#004F6C" }}>
+    <section className="px-4 py-8" style={{ background: "#FFFDEE" }}>
       <div className="max-w-6xl mx-auto">
-        <div className="mb-6 flex items-center justify-between">
-          <h2
-            className="text-xl md:text-2xl font-bold"
-            style={{
-              color: "#ffffffff",
-              textShadow: "0 0 20px rgba(0, 191, 255, 0.4)",
-            }}
-          >
-            Trending now
-          </h2>
+        <div className="mb-6">
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
+            <h2
+              className="text-xl md:text-2xl font-bold flex items-center gap-2"
+              style={{
+                color: "#000000",
+                textShadow: "0 0 20px rgba(0, 191, 255, 0.4)",
+              }}
+            >
+              Recommendations
+            </h2>
+          </div>
+
+          {/* Info bar with message */}
+          {!loading && items && items.length > 0 && (
+            <div
+              className="text-xs px-3 py-2 rounded-lg"
+              style={{ background: "rgba(2, 195, 151, 0.1)", color: "#666" }}
+            >
+              <span className="font-medium">
+                Curated for you — hope you find something you love!
+              </span>
+            </div>
+          )}
         </div>
 
         {loading ? (
@@ -74,14 +88,11 @@ export function Trending() {
         ) : error ? (
           <Card
             style={{
-              background: "#AACACE",
+              background: "#AFFA01",
               border: "1px solid rgba(30, 144, 255, 0.3)",
             }}
           >
-            <CardContent
-              className="p-6 text-sm"
-              style={{ color: "#000000" }} // Diubah menjadi hitam
-            >
+            <CardContent className="p-6 text-sm" style={{ color: "#000000" }}>
               {error}
             </CardContent>
           </Card>
@@ -92,7 +103,7 @@ export function Trending() {
                 key={t.id}
                 className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:scale-105"
                 style={{
-                  background: "#AACACE",
+                  background: "#02C397",
                   border: "1px solid rgba(30, 144, 255, 0.4)",
                   boxShadow: "0 4px 15px rgba(0, 191, 255, 0.15)",
                 }}
@@ -103,7 +114,7 @@ export function Trending() {
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.boxShadow =
-                    "0 4px 15px rgba(0, 191, 255, 0.15)";
+                    "0 4px 15px rgba(251, 0, 255, 0.15)";
                   e.currentTarget.style.borderColor = "rgba(30, 144, 255, 0.4)";
                 }}
               >
@@ -142,18 +153,21 @@ export function Trending() {
                       />
                     )}
 
-                    {/* Rank badge */}
-                    <span
-                      className="absolute top-2 left-2 rounded-full px-2.5 py-1 text-xs font-bold"
-                      style={{
-                        background: "linear-gradient(135deg, #00BFFF, #1E90FF)",
-                        color: "#000000", // Diubah menjadi hitam
-                        boxShadow: "0 0 15px rgba(0, 191, 255, 0.5)",
-                        border: "1px solid rgba(255, 255, 255, 0.2)",
-                      }}
-                    >
-                      #{idx + 1}
-                    </span>
+                    {/* Ranking badge */}
+                    {idx < 8 && (
+                      <span
+                        className="absolute top-2 left-2 rounded-full px-2.5 py-1 text-xs font-bold"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #e2fbce, #076653)",
+                          color: "#000000",
+                          boxShadow: "0 0 15px rgba(0, 191, 255, 0.5)",
+                          border: "1px solid rgba(255, 255, 255, 0.2)",
+                        }}
+                      >
+                        #{idx + 1}
+                      </span>
+                    )}
 
                     {/* Glow overlay */}
                     <div
@@ -168,13 +182,13 @@ export function Trending() {
                   <div className="mt-3">
                     <div
                       className="font-semibold truncate text-sm"
-                      style={{ color: "#000000" }} // Diubah menjadi hitam
+                      style={{ color: "#000000" }}
                     >
                       {t.name}
                     </div>
                     <div
                       className="text-xs truncate mt-0.5"
-                      style={{ color: "#000000" }} // Diubah menjadi hitam
+                      style={{ color: "#000000" }}
                     >
                       {t.artists.join(", ")}
                     </div>
@@ -186,7 +200,7 @@ export function Trending() {
                   className="pointer-events-none absolute inset-0 rounded-xl ring-0 ring-offset-1 group-focus-within:ring-2"
                   style={
                     {
-                      "--tw-ring-color": "#000000", // Diubah menjadi hitam
+                      "--tw-ring-color": "#000000",
                       backgroundColor: "transparent",
                     } as React.CSSProperties
                   }
@@ -201,10 +215,7 @@ export function Trending() {
               border: "1px solid rgba(30, 144, 255, 0.3)",
             }}
           >
-            <CardContent
-              className="p-6 text-sm"
-              style={{ color: "#000000" }} // Diubah menjadi hitam
-            >
+            <CardContent className="p-6 text-sm" style={{ color: "#000000" }}>
               No trending tracks yet. Try searching to seed your cache.
             </CardContent>
           </Card>
