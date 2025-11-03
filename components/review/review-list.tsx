@@ -563,11 +563,9 @@ export default function ReviewsList({
                   className="block mt-2 italic"
                   style={{ color: "#076653" }}
                 >
-                  "
                   {deleteTarget.body.length > 80
                     ? `${deleteTarget.body.slice(0, 80)}…`
                     : deleteTarget.body}
-                  "
                 </span>
               ) : null}
             </AlertDialogDescription>

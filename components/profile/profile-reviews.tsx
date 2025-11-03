@@ -583,11 +583,11 @@ export default function ProfileReviews({
                     Review Preview:
                   </p>
                   <p className="text-sm italic" style={{ color: "#64748b" }}>
-                    "
+                    &quot;
                     {deleting.body.length > 100
                       ? `${deleting.body.slice(0, 100)}…`
                       : deleting.body}
-                    "
+                    &quot;
                   </p>
                 </div>
               )}

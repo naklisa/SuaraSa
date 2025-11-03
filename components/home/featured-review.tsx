@@ -3,6 +3,7 @@
 
 import * as React from "react";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
+import Image from "next/image";
 
 // Stars component inline
 const Stars = ({ value }: { value: number }) => {
@@ -193,9 +194,11 @@ export function FeaturedReviews() {
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
                           {item.author.image ? (
-                            <img
+                            <Image
                               src={item.author.image}
                               alt={item.author.name}
+                              width={40}
+                              height={40}
                               className="w-10 h-10 rounded-full object-cover"
                               style={{
                                 border: "2px solid rgba(2, 195, 151, 0.5)",
@@ -261,9 +264,11 @@ export function FeaturedReviews() {
                               boxShadow: "0 8px 25px rgba(2, 195, 151, 0.3)",
                             }}
                           >
-                            <img
+                            <Image
                               src={item.track.image}
                               alt={item.track.name}
+                              width={100}
+                              height={100}
                               className="object-cover w-full h-full"
                             />
                           </div>

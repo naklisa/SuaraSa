@@ -73,7 +73,8 @@ export function HomeScreen() {
                 </span>
               ) : (
                 <span className="font-medium">
-                  {items.length} result{items.length !== 1 ? "s" : ""} for "{q}"
+                  {items.length} result{items.length !== 1 ? "s" : ""} for
+                  &quot;{q}&quot;
                 </span>
               )}
             </span>

@@ -31,14 +31,14 @@ export function Hero({
     "Search by mood or genre…",
   ];
 
-  // Rotating placeholder effect
+  // ✅ Fixed: tambahkan placeholders.length ke dependency agar tidak warning
   React.useEffect(() => {
     if (isTyping) return;
     const interval = setInterval(() => {
       setPlaceholder((prev) => (prev + 1) % placeholders.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [isTyping]);
+  }, [isTyping, placeholders.length]);
 
   return (
     <section
@@ -48,16 +48,12 @@ export function Hero({
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        borderRadius: "48px 48px 0 0", // ✅ hanya atas yang tumpul
+        borderRadius: "48px 48px 0 0",
       }}
     >
-      {/* Overlay gelap agar teks jelas */}
       <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
-
-      {/* ✅ Gradient bawah lembut (lebih tipis) */}
       <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent via-white/20 to-white" />
 
-      {/* Glow animasi background */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-20"
@@ -81,7 +77,6 @@ export function Hero({
         />
       </div>
 
-      {/* Title */}
       <div className="relative">
         <h1
           className="text-5xl md:text-[10rem] relative inline-block"
@@ -109,7 +104,6 @@ export function Hero({
         Discover, review, and share your favorite tracks with the community.
       </p>
 
-      {/* Search form */}
       <form
         className="mt-10 max-w-xl mx-auto relative"
         onSubmit={(e) => {
@@ -152,7 +146,6 @@ export function Hero({
               aria-label="Search query"
             />
 
-            {/* Search icon */}
             <div
               className="absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none"
               style={{ color: "#02C397" }}
@@ -180,7 +173,6 @@ export function Hero({
               </svg>
             </div>
 
-            {/* Clear button */}
             {value && !loading && (
               <button
                 type="button"
@@ -273,7 +265,6 @@ export function Hero({
         </div>
       </form>
 
-      {/* Keyboard shortcut tip */}
       <div
         className="mt-6 flex items-center justify-center gap-2 text-xs"
         style={{ color: "#fff" }}
