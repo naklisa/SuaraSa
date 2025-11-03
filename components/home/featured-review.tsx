@@ -84,9 +84,9 @@ export function FeaturedReviews() {
     <section
       className="px-4 py-6"
       style={{
-        background: "linear-gradient(180deg, #FFFDEE 0%, #02C397 100%)",
+        background: "linear-gradient(180deg,  #02C397)",
         minHeight: "100vh",
-        borderRadius: "48px 48px 0 0",
+        borderRadius: "24px",
       }}
     >
       <div className="max-w-6xl mx-auto">

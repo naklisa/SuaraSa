@@ -44,11 +44,20 @@ export function Hero({
     <section
       className="relative px-4 pb-10 pt-8 text-center overflow-hidden"
       style={{
-        background: "linear-gradient(180deg, #02C397 0%, #FFFDEE 100%)",
-        borderRadius: "0 0 48px 48px", // 添加底部圆角，让页面底部圆润
+        backgroundImage: "url('/images/hero.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        borderRadius: "48px 48px 0 0", // ✅ hanya atas yang tumpul
       }}
     >
-      {/* Animated background glow */}
+      {/* Overlay gelap agar teks jelas */}
+      <div className="absolute inset-0 bg-black/40" aria-hidden="true" />
+
+      {/* ✅ Gradient bawah lembut (lebih tipis) */}
+      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-b from-transparent via-white/20 to-white" />
+
+      {/* Glow animasi background */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-20"
@@ -72,33 +81,7 @@ export function Hero({
         />
       </div>
 
-      {/* Top Left Corner - Headphone dengan bounce */}
-      <div
-        className="absolute text-7xl opacity-60 animate-bounce"
-        style={{
-          top: "15%",
-          left: "3%",
-          animationDuration: "3.8s",
-          animationDelay: "0.5s",
-        }}
-      >
-        🎧
-      </div>
-
-      {/* Top Right Corner - Guitar dengan bounce */}
-      <div
-        className="absolute text-7xl opacity-60 animate-bounce"
-        style={{
-          top: "15%",
-          right: "3%",
-          animationDuration: "4.2s",
-          animationDelay: "1.5s",
-        }}
-      >
-        🎸
-      </div>
-
-      {/* Title with enhanced styling */}
+      {/* Title */}
       <div className="relative">
         <h1
           className="text-5xl md:text-[10rem] relative inline-block"
@@ -116,8 +99,8 @@ export function Hero({
       <p
         className="mt-6 text-base md:text-lg max-w-2xl mx-auto relative font-medium"
         style={{
-          color: "#1a1a1a",
-          textShadow: "0 1px 3px rgba(255, 255, 255, 0.5)",
+          color: "#ffffff",
+          textShadow: "0 1px 4px rgba(0, 0, 0, 0.8)",
           fontFamily:
             "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
           letterSpacing: "0.01em",
@@ -126,7 +109,7 @@ export function Hero({
         Discover, review, and share your favorite tracks with the community.
       </p>
 
-      {/* Search form with enhanced design */}
+      {/* Search form */}
       <form
         className="mt-10 max-w-xl mx-auto relative"
         onSubmit={(e) => {
@@ -151,7 +134,7 @@ export function Hero({
                 border: "2px solid rgba(2, 195, 151, 0.3)",
                 color: "#000000",
                 boxShadow: "0 4px 20px rgba(0, 191, 255, 0.15)",
-                borderRadius: "24px", // 增加圆角半径
+                borderRadius: "24px",
               }}
               onFocus={(e) => {
                 e.currentTarget.style.borderColor = "#02C397";
@@ -239,7 +222,7 @@ export function Hero({
               color:
                 value.trim() && !loading ? "#ffffff" : "rgba(0, 0, 0, 0.3)",
               border: "2px solid transparent",
-              borderRadius: "24px", // 增加圆角半径
+              borderRadius: "24px",
               boxShadow:
                 value.trim() && !loading
                   ? "0 4px 20px rgba(2, 195, 151, 0.4)"
@@ -293,7 +276,7 @@ export function Hero({
       {/* Keyboard shortcut tip */}
       <div
         className="mt-6 flex items-center justify-center gap-2 text-xs"
-        style={{ color: "#666" }}
+        style={{ color: "#fff" }}
       >
         <span>Press</span>
         <kbd
@@ -303,7 +286,7 @@ export function Hero({
             border: "1px solid rgba(2, 195, 151, 0.3)",
             color: "#02C397",
             boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-            borderRadius: "8px", // 添加圆角
+            borderRadius: "8px",
           }}
         >
           Enter

@@ -19,7 +19,7 @@ export default async function Header() {
   return (
     <header
       className="sticky top-0 z-40 border-b backdrop-blur supports-[backdrop-filter]:bg-background/100"
-      style={{ backgroundColor: "#0C2521" }}
+      style={{ backgroundColor: "#115e51ff" }}
     >
       <div className="mx-auto h-16 max-w-7xl px-4 md:px-8 flex items-center justify-between">
         {/* Left: Brand */}

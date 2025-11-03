@@ -46,10 +46,8 @@ export function HomeScreen() {
   }
 
   return (
-    <div
-      className="space-y-0 relative"
-      style={{ background: "#FFFDEE", minHeight: "50vh" }}
-    >
+    <div className="space-y-0 relative">
+      {/* 🔹 Input Pencarian */}
       <Hero
         value={q}
         onChange={setQ}
@@ -57,7 +55,7 @@ export function HomeScreen() {
         loading={loading}
       />
 
-      {/* Quick Stats Bar */}
+      {/* 🔹 Quick Stats Bar */}
       {(items.length > 0 || loading) && (
         <div
           className="sticky top-0 z-30 px-4 py-2 border-b backdrop-blur-sm"
@@ -96,11 +94,12 @@ export function HomeScreen() {
         </div>
       )}
 
+      {/* 🔹 Bagian konten utama */}
       <Trending />
       <FeaturedReviews />
       <Results items={items} error={error} anchorRef={resultRef} />
 
-      {/* Scroll to Top Button */}
+      {/* 🔹 Tombol Scroll to Top */}
       {items.length > 5 && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
