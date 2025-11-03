@@ -28,7 +28,7 @@ export default async function Header() {
           className="text-5xl text-white hover:opacity-90 transition mb-4"
           style={{ fontFamily: "var(--font-retrock)" }}
         >
-          SuaraAsa
+          SuarAsa
         </Link>
 
         {/* Right: Avatar or Sign In */}
