@@ -23,6 +23,9 @@ const retrock = localFont({
 export const metadata: Metadata = {
   title: "SuarAsa",
   description: "Review your favorite tracks",
+  icons: {
+    icon: "/favicon.png", // ✅ path ke favicon baru di folder public
+  },
 };
 
 export default function RootLayout({
