@@ -33,6 +33,13 @@ import LikeDislikeButtons from "@/components/review/like-dislike-buttons";
 import CommentList from "@/components/comment/comment-list";
 import CommentForm from "@/components/comment/comment-form";
 
+// Formatter stabil: bahasa Indonesia + zona waktu Jakarta (mencegah hydration mismatch)
+const DATE_FORMATTER = new Intl.DateTimeFormat("id-ID", {
+  dateStyle: "medium",
+  timeStyle: "short",
+  timeZone: "Asia/Jakarta",
+});
+
 type Author = {
   id: string;
   displayName?: string | null;
@@ -77,7 +84,7 @@ export default function ReviewsList({
   );
   const [loading, setLoading] = React.useState(false);
 
-  // 🔁 IMPORTANT: resync when props change (after router.refresh)
+  // 🔁 Resync ketika props berubah (mis. setelah router.refresh)
   React.useEffect(() => {
     setItems(
       initialItems.map((r) => ({ ...r, createdAt: String(r.createdAt) }))
@@ -85,14 +92,14 @@ export default function ReviewsList({
     setNextCursor(initialNextCursor);
   }, [initialItems, initialNextCursor]);
 
-  // 🔔 Listen for newly-created review from the form and prepend
+  // 🔔 Listen event review baru dari form, lalu prepend
   React.useEffect(() => {
     const onCreated = (e: Event) => {
       const ce = e as CustomEvent<Review>;
       const review = ce.detail;
       if (!review || review.trackId !== trackId) return;
       setItems((prev) => {
-        // avoid duplicate if router.refresh already brought it in
+        // hindari duplikat jika router.refresh sudah menarik data baru
         if (prev.some((x) => x.id === review.id)) return prev;
         const normalized = { ...review, createdAt: String(review.createdAt) };
         return [normalized, ...prev];
@@ -138,7 +145,7 @@ export default function ReviewsList({
     setEditHover(null);
   };
 
-  // keyboard support for rating (← / →)
+  // keyboard support untuk rating (← / →)
   const onStarsKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
@@ -243,7 +250,12 @@ export default function ReviewsList({
       {items.map((r) => {
         const name = r.author?.displayName || r.author?.name || "User";
         const initial = (name?.[0] || "U").toUpperCase();
-        const createdIso = new Date(r.createdAt).toISOString();
+
+        // Hitung Date sekali, pakai di ISO + display
+        const createdDate = new Date(r.createdAt);
+        const createdIso = createdDate.toISOString();
+        const createdDisplay = DATE_FORMATTER.format(createdDate);
+
         const mine = currentUserId && r.authorId === currentUserId;
 
         return (
@@ -304,10 +316,7 @@ export default function ReviewsList({
 
                   <span style={{ color: "#076653" }}>•</span>
                   <time dateTime={createdIso} style={{ color: "#0a6b56" }}>
-                    {new Date(r.createdAt).toLocaleString(undefined, {
-                      dateStyle: "medium",
-                      timeStyle: "short",
-                    })}
+                    {createdDisplay}
                   </time>
                 </div>
 
@@ -377,7 +386,7 @@ export default function ReviewsList({
             <div className="mt-4 ml-12">
               <CommentList
                 reviewId={r.id}
-                initialItems={[]} // TODO: Fetch initial comments if needed
+                initialItems={[]} // TODO: seed initial comments if needed
                 initialNextCursor={null}
                 pageSize={5}
                 currentUserId={currentUserId}

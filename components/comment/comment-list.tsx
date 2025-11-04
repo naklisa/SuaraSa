@@ -72,6 +72,22 @@ export default function CommentList({
     setNextCursor(initialNextCursor)
   }, [initialItems, initialNextCursor])
 
+  // Fetch comments on mount
+  React.useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        const res = await fetch(`/api/reviews/${reviewId}/comments?limit=${pageSize}`, { cache: "no-store" })
+        if (!res.ok) throw new Error("Failed to fetch comments")
+        const json = await res.json()
+        setItems(json.items.map((c: Comment) => ({ ...c, createdAt: String(c.createdAt) })))
+        setNextCursor(json.nextCursor)
+      } catch (error) {
+        console.error("Error fetching comments:", error)
+      }
+    }
+    fetchComments()
+  }, [reviewId, pageSize])
+
   // 🔔 Listen for newly-created comment
   React.useEffect(() => {
     const onCreated = (e: Event) => {
