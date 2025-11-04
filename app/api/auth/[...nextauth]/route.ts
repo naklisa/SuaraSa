@@ -1,5 +1,6 @@
 // app/api/auth/[...nextauth]/route.ts
 import NextAuth, { type AuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
 import SpotifyProvider from "next-auth/providers/spotify"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import type { Adapter } from "next-auth/adapters"
@@ -9,6 +10,10 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
   session: { strategy: "database" },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID!,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET!,

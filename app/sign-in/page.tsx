@@ -4,6 +4,7 @@
 import { signIn } from "next-auth/react"
 import { toast } from "sonner"
 import { FaSpotify } from "react-icons/fa"
+import { FcGoogle } from "react-icons/fc"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,18 +16,22 @@ import {
 import * as React from "react"
 
 export default function SignInPage() {
-  const [loading, setLoading] = React.useState(false)
+  const [loadingProvider, setLoadingProvider] = React.useState<
+    "spotify" | "google" | null
+  >(null)
 
-  const handleSpotifySignIn = async () => {
+  const handleSignIn = async (provider: "spotify" | "google") => {
     try {
-      setLoading(true)
-      toast.loading("Opening Spotify…")
+      setLoadingProvider(provider)
+      toast.loading(
+        provider === "spotify" ? "Opening Spotify..." : "Opening Google...",
+      )
       // Use query flag so a success toast can show after redirect via ToastOnAuth
-      await signIn("spotify", { callbackUrl: "/?signedIn=1" })
+      await signIn(provider, { callbackUrl: "/?signedIn=1" })
     } catch {
       toast.dismiss()
       toast.error("Failed to start sign in. Please try again.")
-      setLoading(false)
+      setLoadingProvider(null)
     }
   }
 
@@ -37,7 +42,7 @@ export default function SignInPage() {
           <CardHeader className="text-center space-y-2">
             <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
             <CardDescription>
-              Sign in with your Spotify account to continue
+              Sign in with Spotify or Google to continue
             </CardDescription>
           </CardHeader>
 
@@ -45,12 +50,27 @@ export default function SignInPage() {
             <Button
               type="button"
               variant="outline"
-              disabled={loading}
-              onClick={handleSpotifySignIn}
+              disabled={loadingProvider !== null}
+              onClick={() => handleSignIn("spotify")}
               className="w-full h-12 gap-2 border-primary/30 hover:bg-primary/5"
             >
               <FaSpotify className="w-5 h-5 text-[#1DB954]" />
-              {loading ? "Redirecting…" : "Continue with Spotify"}
+              {loadingProvider === "spotify"
+                ? "Redirecting..."
+                : "Continue with Spotify"}
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              disabled={loadingProvider !== null}
+              onClick={() => handleSignIn("google")}
+              className="w-full h-12 gap-2 border-primary/30 hover:bg-primary/5"
+            >
+              <FcGoogle className="w-5 h-5" />
+              {loadingProvider === "google"
+                ? "Redirecting..."
+                : "Continue with Google"}
             </Button>
           </CardContent>
         </Card>

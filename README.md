@@ -20,6 +20,16 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment Variables
+
+Create a `.env.local` file before running the app and populate it with the required credentials:
+
+- `DATABASE_URL` - MongoDB connection string used by Prisma.
+- `NEXTAUTH_SECRET` - secret string for NextAuth JWT/signing.
+- `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` - Spotify application credentials.
+- `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` - Google OAuth credentials for the new sign-in option.
+- `NEXTAUTH_URL` - public site URL (set to `http://localhost:3000` during local development).
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
