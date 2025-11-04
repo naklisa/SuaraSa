@@ -145,7 +145,7 @@ export default async function PublicProfilePage({
       {/* Favorites (read-only) */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg text-white font-semibold">Favorites</h2>
+          <h2 className="text-lg text-black font-semibold">Favorites</h2>
           <p className="text-xs md:text-sm text-white">Tracks rated 5★</p>
         </div>
 

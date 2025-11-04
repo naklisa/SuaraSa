@@ -195,7 +195,7 @@ export default async function ProfilePage() {
       {/* Favorites */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg text-white font-semibold">Favorites</h2>
+          <h2 className="text-lg text-black font-semibold">Favorites</h2>
           <p className="text-xs md:text-sm text-white">Tracks you rated 5★</p>
         </div>
 
@@ -298,7 +298,7 @@ export default async function ProfilePage() {
       {/* Reviews */}
       <section className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg text-white font-semibold">Your reviews</h2>
+          <h2 className="text-lg text-black font-semibold">Your reviews</h2>
           <div className="text-xs text-white inline-flex items-center gap-1">
             <Calendar className="w-3.5 h-3.5" />
             Sorted by most recent
