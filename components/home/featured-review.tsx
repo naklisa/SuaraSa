@@ -54,13 +54,14 @@ export function FeaturedReviews() {
     Record<string, { like?: boolean; dislike?: boolean }>
   >({});
 
+
   React.useEffect(() => {
     (async () => {
       try {
         const r = await fetch("/api/featured-reviews", { cache: "no-store" });
         if (!r.ok) throw new Error("Failed to load featured");
         const json = await r.json();
-        setItems((json.items ?? []).slice(0, 3));
+        setItems(json.items ?? []);
       } catch {
         setError("Couldn't load featured reviews right now.");
         setItems([]);

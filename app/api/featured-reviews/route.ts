@@ -14,8 +14,8 @@ export async function GET() {
     take: 20, // pick more than 3 to randomize from
   })
 
-  // Shuffle and pick only 3
-  const random = reviews.sort(() => Math.random() - 0.5).slice(0, 3)
+  // Shuffle and pick 20
+  const random = reviews.sort(() => Math.random() - 0.5).slice(0, 20)
 
   return NextResponse.json({
     items: random.map((r) => ({

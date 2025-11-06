@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Load the local Retrock font
 const retrock = localFont({
   src: "../font/Retrock.ttf",
   variable: "--font-retrock",
@@ -24,7 +23,7 @@ export const metadata: Metadata = {
   title: "SuarAsa",
   description: "Review your favorite tracks",
   icons: {
-    icon: "/favicon.png", // ✅ path ke favicon baru di folder public
+    icon: "/favicon.png",
   },
 };
 
@@ -34,8 +33,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} ${retrock.variable} font-sans`}
         style={{
           background:

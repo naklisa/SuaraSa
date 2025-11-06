@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ReviewForm from "@/components/review/review-form";
 import ReviewsList from "@/components/review/review-list";
+import BackButton from "@/components/ui/back-button";
 import { unstable_noStore as noStore } from "next/cache";
 
 const PAGE_SIZE = 10;
@@ -67,27 +68,30 @@ export default async function TrackPage({
   return (
     <div className="space-y-8">
       {/* Header */}
-      <header className="flex items-start gap-4">
-        {track.albumImage && (
-          <Image
-            src={track.albumImage}
-            alt={track.name}
-            width={96}
-            height={96}
-            loading="lazy"
-            className="w-24 h-24 rounded-xl object-cover border"
-          />
-        )}
-        <div className="min-w-0">
-          <h1 className="text-2xl font-semibold truncate">{track.name}</h1>
-          <p className="text-sm text-muted-foreground truncate">
-            {track.artists.join(", ")}
-            {track.album ? ` — ${track.album}` : ""}
-          </p>
-          <div className="mt-2 text-sm inline-flex items-center gap-2">
-            <strong className="font-semibold">{avg.toFixed(1)}</strong>
-            <Stars value={avg} />
-            <span className="text-muted-foreground">avg</span>
+      <header>
+        <BackButton />
+        <div className="flex items-start gap-4 mt-4">
+          {track.albumImage && (
+            <Image
+              src={track.albumImage}
+              alt={track.name}
+              width={96}
+              height={96}
+              loading="lazy"
+              className="w-24 h-24 rounded-xl object-cover border"
+            />
+          )}
+          <div className="min-w-0">
+            <h1 className="text-2xl font-semibold truncate">{track.name}</h1>
+            <p className="text-sm text-muted-foreground truncate">
+              {track.artists.join(", ")}
+              {track.album ? ` — ${track.album}` : ""}
+            </p>
+            <div className="mt-2 text-sm inline-flex items-center gap-2">
+              <strong className="font-semibold">{avg.toFixed(1)}</strong>
+              <Stars value={avg} />
+              <span className="text-muted-foreground">avg</span>
+            </div>
           </div>
         </div>
       </header>
