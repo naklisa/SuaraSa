@@ -39,7 +39,7 @@ export default function RootLayout({
         className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} ${retrock.variable} font-sans`}
         style={{
           background:
-            "linear-gradient(180deg, #02C397 5%, #FFFDEE 18%, #FFFDEE 20%, #02C397 90%)",
+            "linear-gradient(180deg, #02C397 5%, #FFFDEE 30%, #FFFDEE 60%, #02C397 90%)",
         }}
       >
         {children}
