@@ -204,37 +204,25 @@ export function Hero({
 
           <Button
             type="submit"
-            disabled={!value.trim() || loading}
             className="h-14 px-8 font-semibold transition-all duration-300 relative overflow-hidden"
             style={{
-              background:
-                value.trim() && !loading
-                  ? "linear-gradient(135deg, #02C397, #076653)"
-                  : "rgba(2, 195, 151, 0.3)",
-              color:
-                value.trim() && !loading ? "#ffffff" : "rgba(0, 0, 0, 0.3)",
+              background: "linear-gradient(135deg, #02C397, #076653)",
+              color: "#ffffff",
               border: "2px solid transparent",
               borderRadius: "24px",
-              boxShadow:
-                value.trim() && !loading
-                  ? "0 4px 20px rgba(2, 195, 151, 0.4)"
-                  : "none",
-              cursor: !value.trim() || loading ? "not-allowed" : "pointer",
+              boxShadow: "0 4px 20px rgba(2, 195, 151, 0.4)",
+              cursor: "pointer",
             }}
             onMouseEnter={(e) => {
-              if (value.trim() && !loading) {
                 e.currentTarget.style.boxShadow =
                   "0 6px 30px rgba(2, 195, 151, 0.6)";
                 e.currentTarget.style.transform =
                   "translateY(-2px) scale(1.02)";
-              }
             }}
             onMouseLeave={(e) => {
-              if (value.trim() && !loading) {
                 e.currentTarget.style.boxShadow =
                   "0 4px 20px rgba(2, 195, 151, 0.4)";
                 e.currentTarget.style.transform = "translateY(0) scale(1)";
-              }
             }}
             aria-busy={loading}
           >
