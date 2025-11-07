@@ -612,7 +612,7 @@ export default function ProfileReviews({
               className="px-6 transition-all"
               style={{
                 background: "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
-                color: "white",
+                color: "black",
                 borderRadius: "8px",
                 boxShadow: "0 4px 12px rgba(220, 38, 38, 0.3)",
               }}
